@@ -1,0 +1,28 @@
+plugins {
+    id "com.jfrog.bintray" version "1.7"
+}
+
+group = 'dmitrygusev'
+version = 'light-jdk8u92+1'
+
+apply plugin: 'maven'
+apply plugin: 'maven-publish'
+
+bintray {
+    user = "$bintray_user"
+    key = "$bintray_api_key"
+    publications = ['mavenJava']
+    pkg {
+        name = project.name
+        repo = 'maven'
+    }
+}
+
+publishing {
+    publications {
+        mavenJava(MavenPublication) {
+            artifact ('dcevm/libjvm.so') { classifier 'libjvm' }
+            artifact ('dcevm/libjsig.so') { classifier 'libjsig' }
+        }
+    }
+}
